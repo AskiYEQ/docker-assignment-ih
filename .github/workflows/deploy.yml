@@ -22,8 +22,8 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy via Azure CLI
+    - name: Deploy to VM
       run: |
-        az vm run-command invoke -g your-resource-group -n your-vm-name \
+        az vm run-command invoke -g Assigment -n Assigment-Week4 \
           --command-id RunShellScript \
-          --scripts "cd /app && git pull origin main && docker-compose down && docker-compose up -d --build"
+          --scripts "cd /home/azureuser/docker-assignment-ih && git pull origin main && docker-compose down && docker-compose up -d --build"
