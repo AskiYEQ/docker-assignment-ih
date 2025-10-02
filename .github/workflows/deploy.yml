@@ -5,17 +5,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build-test-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
-    - name: Build and Test
-      run: |
-        echo "Building and testing application..."
-        cd frontend && npm install
-        cd ../backend && npm install
 
     - name: Azure Login
       uses: azure/login@v2
@@ -26,4 +20,9 @@ jobs:
       run: |
         az vm run-command invoke -g Assigment -n Assigment-Week4 \
           --command-id RunShellScript \
-          --scripts "cd /home/azureuser/docker-assignment-ih && git pull origin main && docker-compose down && docker-compose up -d --build"
+          --scripts "
+            cd /home/azureuser/docker-assignment-ih
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
+          "
